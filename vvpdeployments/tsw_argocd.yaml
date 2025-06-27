@@ -5,7 +5,6 @@ metadata:
   namespace: vvp
   annotations:
     apikey: 44b8cb59-ea8b-41fa-8f72-9f9ad0fb26ed
-    argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd
 spec:
   syncingMode: PATCH
   deployment:
