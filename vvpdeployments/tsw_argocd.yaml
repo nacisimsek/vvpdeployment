@@ -4,6 +4,7 @@ metadata:
   name: tsw-argocd
   namespace: vvp
   annotations:
+    apikeySecretName: apikey-secret
     argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw_argocd
 spec:
   syncingMode: PATCH
