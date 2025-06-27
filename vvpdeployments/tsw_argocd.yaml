@@ -25,7 +25,7 @@ spec:
             flinkImageRegistry: registry.ververica.com/v2.15
             flinkImageRepository: flink
             flinkImageTag: 1.20.1-stream1-scala_2.12-java11
-            flinkVersion: '1.18'
+            flinkVersion: '1.20'
             jarUri: s3://naci-bucket/artifacts/namespaces/default/TopSpeedWindowing.jar
             kind: JAR
           resources:
