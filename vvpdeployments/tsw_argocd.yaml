@@ -1,7 +1,7 @@
 apiVersion: ververica.platform/v1
 kind: VvpDeployment
 metadata:
-  name: tsw_argocd
+  name: tsw-argocd
   namespace: vvp
   annotations:
     argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw_argocd
@@ -9,7 +9,7 @@ spec:
   syncingMode: PATCH
   deployment:
     userMetadata:
-      name: tsw_argocd
+      name: tsw-argocd
       namespace: default
     spec:
       state: CANCELLED
