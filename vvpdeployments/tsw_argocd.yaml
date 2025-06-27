@@ -4,7 +4,7 @@ metadata:
   name: tsw-argocd
   namespace: vvp
   annotations:
-    apikey: 44b8cb59-ea8b-41fa-8f72-9f9ad0fb26ed
+    apikeySecretName: apikey-secret
 spec:
   syncingMode: PATCH
   deployment:
