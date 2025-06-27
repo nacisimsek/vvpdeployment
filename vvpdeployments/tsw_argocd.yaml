@@ -1,0 +1,43 @@
+apiVersion: ververica.platform/v1
+kind: VvpDeployment
+metadata:
+  name: tsw_argocd
+  namespace: vvp
+  annotations:
+    argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw_argocd
+spec:
+  syncingMode: PATCH
+  deployment:
+    userMetadata:
+      name: tsw_argocd
+      namespace: default
+    spec:
+      state: CANCELLED
+      deploymentTargetName: vvp
+      maxJobCreationAttempts: 3
+      upgradeStrategy:
+        kind: STATEFUL
+      restoreStrategy:
+        kind: LATEST_STATE
+      template:
+        spec:
+          artifact:
+            flinkImageRegistry: registry.ververica.com/v2.15
+            flinkImageRepository: flink
+            flinkImageTag: 1.20.1-stream1-scala_2.12-java11
+            flinkVersion: '1.18'
+            jarUri: s3://naci-bucket/artifacts/namespaces/default/TopSpeedWindowing.jar
+            kind: JAR
+          resources:
+            jobmanager:
+              cpu: 0.2
+              memory: 1g
+            taskmanager:
+              cpu: 0.2
+              memory: 1g
+          flinkConfiguration:
+            high-availability: kubernetes
+            execution.checkpointing.interval:
+            execution.checkpointing.min-pause:
+            restart-strategy: fixed-delay
+            restart-strategy.fixed-delay.attempts: '1'
