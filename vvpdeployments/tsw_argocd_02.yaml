@@ -1,0 +1,42 @@
+apiVersion: ververica.platform/v1
+kind: VvpDeployment
+metadata:
+  name: tsw-argocd-02
+  namespace: vvp
+  annotations:
+    apikeySecretName: apikey-secret
+spec:
+  syncingMode: PATCH
+  deployment:
+    userMetadata:
+      name: tsw-argocd-02
+      namespace: default
+    spec:
+      state: RUNNING
+      deploymentTargetName: vvp
+      maxJobCreationAttempts: 3
+      upgradeStrategy:
+        kind: STATEFUL
+      restoreStrategy:
+        kind: LATEST_STATE
+      template:
+        spec:
+          artifact:
+            flinkImageRegistry: registry.ververica.com/v2.15
+            flinkImageRepository: flink
+            flinkImageTag: 1.20.1-stream1-scala_2.12-java11
+            flinkVersion: '1.20'
+            jarUri: s3://naci-bucket/artifacts/namespaces/default/TopSpeedWindowing.jar
+            kind: JAR
+          resources:
+            jobmanager:
+              cpu: 0.2
+              memory: 1g
+            taskmanager:
+              cpu: 0.2
+              memory: 1g
+          flinkConfiguration:
+            high-availability: kubernetes
+            execution.checkpointing.interval: 25s
+            restart-strategy: fixed-delay
+            restart-strategy.fixed-delay.attempts: '2'
