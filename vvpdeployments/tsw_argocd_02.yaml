@@ -8,7 +8,6 @@ metadata:
     # Add ArgoCD tracking annotation for the VvpDeployment itself
     argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
     argocd.argoproj.io/compare-options: IgnoreExtraneous
-  # Add labels for the VvpDeployment itself
   labels:
     app: tsw-argocd-02
     managed-by: argocd
@@ -18,11 +17,9 @@ spec:
     userMetadata:
       name: tsw-argocd-02
       namespace: default
-      # These labels will be propagated to child resources
       labels:
         app: tsw-argocd-02
         managed-by: argocd
-      # These annotations will be propagated to child resources
       annotations:
         argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
     spec:
@@ -35,8 +32,6 @@ spec:
         kind: LATEST_STATE
       template:
         metadata:
-          # This is another place to add labels/annotations that will be propagated
-          # to the JobManager and TaskManager pods
           labels:
             app: tsw-argocd-02
             managed-by: argocd
