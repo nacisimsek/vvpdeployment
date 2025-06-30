@@ -5,12 +5,23 @@ metadata:
   namespace: vvp
   annotations:
     apikeySecretName: apikey-secret
+    # Add ArgoCD tracking annotation - this is the key part
+    argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
+    # Optional: Configure how ArgoCD compares this resource
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   syncingMode: PATCH
   deployment:
     userMetadata:
       name: tsw-argocd-02
       namespace: default
+      # Add labels that will be propagated to child resources
+      labels:
+        app: tsw-argocd-02
+        managed-by: argocd
+      # Add annotations that will be propagated to child resources  
+      annotations:
+        argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
     spec:
       state: RUNNING
       deploymentTargetName: vvp
