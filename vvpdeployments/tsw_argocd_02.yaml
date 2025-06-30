@@ -5,21 +5,24 @@ metadata:
   namespace: vvp
   annotations:
     apikeySecretName: apikey-secret
-    # Add ArgoCD tracking annotation - this is the key part
+    # Add ArgoCD tracking annotation for the VvpDeployment itself
     argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
-    # Optional: Configure how ArgoCD compares this resource
     argocd.argoproj.io/compare-options: IgnoreExtraneous
+  # Add labels for the VvpDeployment itself
+  labels:
+    app: tsw-argocd-02
+    managed-by: argocd
 spec:
   syncingMode: PATCH
   deployment:
     userMetadata:
       name: tsw-argocd-02
       namespace: default
-      # Add labels that will be propagated to child resources
+      # These labels will be propagated to child resources
       labels:
         app: tsw-argocd-02
         managed-by: argocd
-      # Add annotations that will be propagated to child resources  
+      # These annotations will be propagated to child resources
       annotations:
         argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
     spec:
@@ -31,6 +34,14 @@ spec:
       restoreStrategy:
         kind: LATEST_STATE
       template:
+        metadata:
+          # This is another place to add labels/annotations that will be propagated
+          # to the JobManager and TaskManager pods
+          labels:
+            app: tsw-argocd-02
+            managed-by: argocd
+          annotations:
+            argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
         spec:
           artifact:
             flinkImageRegistry: registry.ververica.com/v2.15
