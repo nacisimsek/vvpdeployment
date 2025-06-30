@@ -5,23 +5,12 @@ metadata:
   namespace: vvp
   annotations:
     apikeySecretName: apikey-secret
-    # Add ArgoCD tracking annotation for the VvpDeployment itself
-    argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
-    argocd.argoproj.io/compare-options: IgnoreExtraneous
-  labels:
-    app: tsw-argocd-02
-    managed-by: argocd
 spec:
   syncingMode: PATCH
   deployment:
     userMetadata:
       name: tsw-argocd-02
       namespace: default
-      labels:
-        app: tsw-argocd-02
-        managed-by: argocd
-      annotations:
-        argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
     spec:
       state: RUNNING
       deploymentTargetName: vvp
@@ -31,12 +20,6 @@ spec:
       restoreStrategy:
         kind: LATEST_STATE
       template:
-        metadata:
-          labels:
-            app: tsw-argocd-02
-            managed-by: argocd
-          annotations:
-            argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
         spec:
           artifact:
             flinkImageRegistry: registry.ververica.com/v2.15
@@ -57,3 +40,22 @@ spec:
             execution.checkpointing.interval: 25s
             restart-strategy: fixed-delay
             restart-strategy.fixed-delay.attempts: '2'
+          kubernetes:
+            jobManagerPodTemplate:
+              metadata:
+                labels:
+                  app: tsw-argocd-02
+                  managed-by: argocd
+                annotations:
+                  prometheus.io/port: '9249'
+                  prometheus.io/scrape: 'true'
+                  argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
+            taskManagerPodTemplate:
+              metadata:
+                labels:
+                  app: tsw-argocd-02
+                  managed-by: argocd
+                annotations:
+                  prometheus.io/port: '9249'
+                  prometheus.io/scrape: 'true'
+                  argocd.argoproj.io/tracking-id: vvp:ververica.platform/VvpDeployment:vvp/tsw-argocd-02
