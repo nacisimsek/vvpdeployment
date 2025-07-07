@@ -26,6 +26,7 @@ spec:
             flinkImageRepository: flink
             flinkImageTag: 1.19.0-stream3-scala_2.12-java11
             flinkVersion: '1.19'
+            jarUri: s3://naci-bucket/artifacts/namespaces/default/TopSpeedWindowing.jar
             kind: JAR
           resources:
             jobmanager:
