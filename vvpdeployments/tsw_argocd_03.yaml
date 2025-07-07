@@ -12,7 +12,7 @@ spec:
       name: tsw-argocd-03
       namespace: default
     spec:
-      state: CANCELLED
+      state: RUNNING
       deploymentTargetName: vvp
       maxJobCreationAttempts: 3
       upgradeStrategy:
