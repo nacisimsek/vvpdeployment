@@ -1,0 +1,32 @@
+apiVersion: ververica.platform/v1
+kind: VvpDeployment
+metadata:
+  name: tsw-argocd-04
+  namespace: vvp
+  annotations:
+    apikeySecretName: apikey-secret
+spec:
+  syncingMode: PATCH
+  deployment:
+    userMetadata:
+      name: tsw-argocd-04
+      namespace: default
+    spec:
+      state: RUNNING
+      deploymentTargetName: vvp
+      maxJobCreationAttempts: 3
+      template:
+        spec:
+          artifact:
+            flinkImageRegistry: eu.gcr.io/da-fe-212612
+            flinkImageRepository: flink
+            flinkImageTag: 1.19.0-stream3-scala_2.12-java11
+            flinkVersion: '1.19'
+            jarUri: >-
+              file:///flink/examples/streaming/TopSpeedWindowing.jar
+            kind: JAR
+  initFields:
+    userMetadata:
+      displayName: test-k8s-operator
+    spec:
+      maxSavepointCreationAttempts: 3
